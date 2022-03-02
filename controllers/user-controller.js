@@ -19,11 +19,11 @@ const userController = {
           res.status(404).json({ message: 'No Users found' });
           return;
         }
-        res.json(userData)
+        res.json(userData);
       })
       .catch(err => {
         console.log(err);
-        res.status(400).json(err);
+        res.status(500).json(err);
       })
   },
 
@@ -61,7 +61,7 @@ const userController = {
       })
   },
 
-  updateUserFriends({ params, body }, res) {
+  updateUser({ params, body }, res) {
     User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
       .then(userData => {
         if (!userData) {
@@ -73,7 +73,7 @@ const userController = {
       .catch(err => res.status(400).json(err));
   },
 
-  deleteUser({ params }) {
+  deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.id })
       .then(userData => {
         if (!userData) {
@@ -86,7 +86,11 @@ const userController = {
         console.log(err);
         res.status(500).json(err);
       })
-  }
+  },
+
+  createFriend() { },
+
+  deleteFriend() { }
 }
 
 module.exports = userController;
