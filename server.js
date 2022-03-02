@@ -1,13 +1,3 @@
-/*
-Routes
-post / put /delete
-*   Users
-*   Thoughts
-post / delete
-*   Reactions
-*   Friends
-----------------------------
-*/
 const express = require('express');
 const mongoose = require('mongoose');
 
