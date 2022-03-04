@@ -1,7 +1,6 @@
-// Thought
 const { Schema, model } = require('mongoose');
+const formateDate = require('../utils/dateFormat');
 
-// This will not be a model, but rather will be used as the reaction field's subdocument schema in the Thought model.
 const ReactionSchema = new Schema(
   {
     reactionId: {
@@ -19,7 +18,12 @@ const ReactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      //get format date
+      get: createdAtVal => formateDate(createdAtVal)
+    }
+  },
+  {
+    toJSON: {
+      getters: true
     }
   }
 )
@@ -35,18 +39,24 @@ const ThoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      //get format date
+      get: createdAtVal => formateDate(createdAtVal)
     },
     username: {
       type: String,
       required: true,
     },
     reactions: [ReactionSchema]
+  },
+  {
+    toJSON: {
+      getters: true,
+      virtuals: true
+    }
   }
 )
 
 ThoughtSchema.virtual('reactionCount').get(function () {
-  return this.reaction.length;
+  return this.reactions.length;
 });
 
 const Thought = model('Thought', ThoughtSchema);
