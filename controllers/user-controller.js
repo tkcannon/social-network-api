@@ -88,9 +88,31 @@ const userController = {
       })
   },
 
-  createFriend() { },
+  addFriend({ params, body }, res) {
+    User.findOneAndUpdate(
+      { _id: params.userId },
+      { $push: { friends: body } },
+      { new: true, runValidators: true }
+    )
+      .then(friendData => {
+        if (!friendData) {
+          res.status(404).json({ message: 'Could not find thought' })
+          return;
+        }
+        res.json(friendData);
+      })
+      .catch(err => res.status(500).json(err));
+  },
 
-  deleteFriend() { }
+  removeFriend({ params }, res) {
+    User.findOneAndUpdate(
+      { _id: params.userId },
+      { $pull: { friends: { friendId: params.friendId } } },
+      { new: true }
+    )
+      .then(userData => res.json(userData))
+      .catch(err => res.status(500).json(err));
+  }
 }
 
 module.exports = userController;
