@@ -24,9 +24,5 @@ router
   .route('/:thoughtId/reactions')
   .put(addReaction)
   .delete(removeReaction)
-<<<<<<< HEAD
-
-=======
   
->>>>>>> develop
 module.exports = router;
