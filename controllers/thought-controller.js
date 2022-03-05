@@ -47,7 +47,6 @@ const thoughtController = {
           { new: true }
         );
       })
-      .select('-__v')
       .then(userData => {
         if (!userData) {
           return res.status(404).json({ message: 'no user found with matching userId' });
