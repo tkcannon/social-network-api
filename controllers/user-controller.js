@@ -88,12 +88,12 @@ const userController = {
       { $push: { friends: params.friendId } },
       { new: true, runValidators: true }
     )
-      .then(friendData => {
-        if (!friendData) {
-          res.status(404).json({ message: 'Could not find thought' })
+      .then(userData => {
+        if (!userData) {
+          res.status(404).json({ message: 'Could not find user' })
           return;
         }
-        res.json(friendData);
+        res.json(userData);
       })
       .catch(err => res.status(500).json(err));
   },
