@@ -4,13 +4,13 @@ const UserSchema = new Schema(
   {
     username: {
       type: String,
-      unique: 'Username must be Unique',
+      unique: true,
       required: 'Username is Required',
       trim: true
     },
     email: {
       type: String,
-      unique: 'User with this email already exists',
+      unique: true,
       required: 'Email is Required',
       trim: true,
       match: [/.+@.+\..+/]
@@ -27,16 +27,12 @@ const UserSchema = new Schema(
         ref: 'User'
       }
     ]
-  },
+  }
 );
 
 UserSchema.virtual('firendCount').get(function () {
-
+  return this.friends.length
 });
-
-// Schema Settings
-
-// Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
 
 const User = model('User', UserSchema);
 
