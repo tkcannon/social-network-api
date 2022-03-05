@@ -22,10 +22,7 @@ router
 
 router
   .route('/:thoughtId/reactions')
-  .patch(addReaction)
+  .put(addReaction)
+  .delete(removeReaction)
 
-router
-  .route('/:thoughtId/reactions/reactionId')
-  .patch(removeReaction)
-  
 module.exports = router;
