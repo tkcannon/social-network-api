@@ -47,7 +47,6 @@ const thoughtController = {
           { new: true }
         );
       })
-      .select('-__v')
       .then(userData => {
         if (!userData) {
           return res.status(404).json({ message: 'no user found with matching userId' });
@@ -80,6 +79,11 @@ const thoughtController = {
           res.status(404).json({ message: 'No thought found with matching id' })
           return;
         }
+        User.findOneAndUpdate(
+          { _id: deletedThought.userId },
+          { $pull: { thoughts: deletedThought._id } },
+          { new: true }
+        );
         res.json({ message: 'Thought with id: ' + deletedThought._id + ' was deleted!' });
       })
       .catch(err => res.status(500).json(err));
